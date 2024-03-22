@@ -7,8 +7,6 @@ import { IoChatbubblesOutline } from "react-icons/io5";
 import { PiUsersLight } from "react-icons/pi";
 import { HiOutlineCamera } from "react-icons/hi2";
 
-
-
 export const ChatBtn = () => {
   return (
     <>
@@ -18,7 +16,6 @@ export const ChatBtn = () => {
     </>
   );
 };
-
 
 export const UserChatBtn = () => {
   return (
@@ -40,7 +37,7 @@ export const UserChat = () => {
   );
 };
 
-export const CallChat = () => {
+export const CallBtn = () => {
   return (
     <>
       <Button variant="circle" size="icon" className="w-[46px] h-[46px]">
@@ -50,8 +47,7 @@ export const CallChat = () => {
   );
 };
 
-
-export const RecordChat = () => {
+export const RecordBtn = () => {
   return (
     <>
       <Button variant="circle" size="icon" className="w-[46px] h-[46px]">
@@ -60,7 +56,6 @@ export const RecordChat = () => {
     </>
   );
 };
-
 
 export const BookMark = () => {
   return (
@@ -72,7 +67,7 @@ export const BookMark = () => {
   );
 };
 
-export const Setting = () => {
+export const Settings = () => {
   return (
     <>
       <Button variant="circle" size="icon" className="w-[46px] h-[46px]">
@@ -81,7 +76,6 @@ export const Setting = () => {
     </>
   );
 };
-
 
 export const AddAccount = () => {
   return (

@@ -4,10 +4,10 @@ import {
   UserChatBtn,
   ChatBtn,
   UserChat,
-  CallChat,
-  RecordChat,
+  CallBtn,
+  RecordBtn,
   BookMark,
-  Setting,
+  Settings,
   AddAccount,
 } from "./btns";
 
@@ -17,19 +17,19 @@ export function Navigation() {
   return (
     <>
       <div className="h-[92vh]">
-        <div className="h-full flex flex-col justify-between">
+        <div className="h-full flex flex-col items-center justify-between">
           <div className="space-y-3">
             <ChatBtn />
           </div>
-          <div className="space-y-3">
+          <div className="space-y-3 flex flex-col items-center">
             <UserChatBtn />
             <UserChat />
-            <CallChat />
-            <RecordChat />
+            <CallBtn />
+            <RecordBtn />
             <BookMark />
-            <Setting />
+            <Settings />
           </div>
-          <div className="space-y-3">
+          <div className="space-y-3 flex flex-col items-center">
             <ModeToggle />
             <AddAccount />
             <UserAvatar />
