@@ -1,6 +1,5 @@
 import { UserAvatar } from "../avatar";
-import { Badge } from "../ui/badge";
-import { MessageStatus, NewMessageBadge } from "./NewMessageBadge";
+import { MessageStatus, NewMessageBadge } from "./newMessageBadge";
 
 export function ChatPreview() {
   return (

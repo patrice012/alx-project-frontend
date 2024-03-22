@@ -10,7 +10,7 @@ import { UserCard } from "../../user/userCard";
 import { Navigation } from "./navigations";
 import { SearchBox } from "./searchBox";
 import { OnlineUsers } from "@/components/user/OnlineUser";
-import { UserChatList } from "@/components/chat/UserChatsList";
+import { UserChatList } from "@/components/chat/userChatsList";
 
 export default function Sidebar() {
   return (
@@ -24,7 +24,7 @@ export default function Sidebar() {
         <ResizableHandle />
         <ResizablePanel defaultSize={80}>
           <ResizablePanelGroup direction="vertical">
-            <ResizablePanel defaultSize={10}>
+            <ResizablePanel minSize={3} defaultSize={10} maxSize={10}>
               <div className="flex h-full items-center justify-center p-6">
                 <UserCard />
               </div>
