@@ -22,7 +22,7 @@ export function ChatInput() {
           {/* <Button onClick={AddEmoji} variant="circle" size="icon" className="w-[46px] h-[46px]">
             <HiOutlineEmojiHappy className="h-[1.3rem] w-[1.3rem] transition-all" />
           </Button> */}
-          <EmojiPicker />
+          {/* <EmojiPicker /> */}
           <Button variant="circle" size="icon" className="w-[46px] h-[46px]">
             <HiOutlinePaperClip className="h-[1.3rem] w-[1.3rem] transition-all" />
           </Button>
