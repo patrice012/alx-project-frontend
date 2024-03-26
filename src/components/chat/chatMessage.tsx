@@ -5,21 +5,35 @@ import { GrEmoji } from "react-icons/gr";
 import { TbDotsVertical } from "react-icons/tb";
 import { PiShareFatLight } from "react-icons/pi";
 
-export function ContactMessage() {
+export function DefaultChatMessage() {
+  return (
+    <>
+      <div className="max-w-[60%] h-full">
+        <div className="flex items-center justify-center mx-auto h-full">
+          <div className="space-y-3">
+            <span>
+              Send and receive messages without keeping your phone online.No
+              price
+            </span>
+            <span>Only your email is require, login and start chat.</span>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export function ContactMessage({ data }: any) {
   return (
     <>
       <div className="w-full relative grid grid-cols-2 gap-5 items-start justify-start">
         <div className="space-y-3">
           <div className="bg-gray-700 p-3 rounded-[16px] rounded-tl-[0px]">
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dicta
-              enim, aliquam corporis omnis odio voluptates mollitia soluta
-              consequatur iure porro blanditiis eum!
-            </p>
+            <p>{data.message}</p>
           </div>
           <div className="relative">
             <p className="text-[10px] text-nowrap absolute top-0 right-0">
-              10:32
+              {data.created_at}
             </p>
           </div>
         </div>
@@ -40,7 +54,7 @@ export function ContactMessage() {
   );
 }
 
-export function UserMessage() {
+export function UserMessage({ data }: any) {
   return (
     <>
       <div className="w-full relative grid grid-cols-2 gap-5 items-start justify-start">
@@ -54,15 +68,11 @@ export function UserMessage() {
         </div>
         <div className="space-y-3">
           <div className=" bg-teal-500 p-3 rounded-[16px] rounded-tr-[0px]">
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dicta
-              enim, aliquam corporis omnis odio voluptates mollitia soluta
-              consequatur iure porro blanditiis eum!
-            </p>
+            <p>{data.message}</p>
           </div>
           <div className="relative">
             <p className="text-[10px] text-nowrap absolute top-0 left-0">
-              10:32
+              {data.created_at}
             </p>
           </div>
         </div>
@@ -70,14 +80,3 @@ export function UserMessage() {
     </>
   );
 }
-
-// export function ChatMessage() {
-//   return (
-//     <>
-//       <div className="space-y-6">
-//         <UserMessage />
-//         <ContactMessage />
-//       </div>
-//     </>
-//   );
-// }

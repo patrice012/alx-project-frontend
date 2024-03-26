@@ -14,12 +14,12 @@ export function OnlineUsers() {
         </div>
         <div className="overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thumb-[#313235] scrollbar-w-full scrollbar-h-1 scrollbar-thumb-rounded-full">
           <div className="flex items-center gap-4 mb-2">
-            <UserAvatar online={true} />
-            <UserAvatar online={true} />
-            <UserAvatar online={true} />
-            <UserAvatar online={true} />
-            <UserAvatar online={true} />
-            <UserAvatar online={true} />
+            <UserAvatar />
+            <UserAvatar />
+            <UserAvatar />
+            <UserAvatar />
+            <UserAvatar />
+            <UserAvatar />
           </div>
         </div>
       </div>

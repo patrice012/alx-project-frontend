@@ -1,3 +1,5 @@
+import data from "@emoji-mart/data";
+import Picker from "@emoji-mart/react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -7,7 +9,7 @@ import {
 
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 
-export function EmojiPicker() {
+export function EmojisPicker({ AddEmoji }: { AddEmoji: (emoji: any) => void }) {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -16,25 +18,16 @@ export function EmojiPicker() {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80">
-        <Emoji />
+        <div className="absolute bottom-0 left-0">
+          <Picker
+            data={data}
+            onEmojiSelect={(emoji: any) => {
+              AddEmoji(emoji.native);
+            }}
+            previewPosition={"none"}
+          />
+        </div>
       </PopoverContent>
     </Popover>
-  );
-}
-
-import data from "@emoji-mart/data";
-import Picker from "@emoji-mart/react";
-
-function Emoji() {
-  return (
-    <>
-      <div className="absolute bottom-0 left-0 hidden">
-        <Picker
-          data={data}
-          onEmojiSelect={console.log}
-          previewPosition={"none"}
-        />
-      </div>
-    </>
   );
 }

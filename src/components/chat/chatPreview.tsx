@@ -1,15 +1,30 @@
 import { UserAvatar } from "../avatar";
 import { MessageStatus, NewMessageBadge } from "./newMessageBadge";
+import { socket } from "@/utils/socket";
 
-export function ChatPreview() {
+interface ChatPreviewProps {
+  sender: string;
+  lastMessage: string;
+  receiver: string;
+  time: string;
+  _id: string;
+}
+
+export function ChatPreview({ discussion }: { discussion: ChatPreviewProps }) {
+  const handleClick = () => {
+    socket.emit("discussionMessageList", { discussionId: discussion._id });
+  };
   return (
     <>
-      <div className="w-full grid grid-cols-[1fr_60px] items-center justify-between">
+      <div
+        onClick={handleClick}
+        className="w-full grid grid-cols-[1fr_60px] items-center justify-between hover:bg-slate-800"
+      >
         <div className="flex items-center justify-start gap-4">
           <UserAvatar />
           <div className="flex flex-col items-start justify-center">
-            <h3 className="text-[16px]">Name</h3>
-            <p className="text-[13px] font-[300]">message preview</p>
+            <h3 className="text-[16px]">{discussion?.sender}</h3>
+            <p className="text-[13px] font-[300]">{discussion?.lastMessage}</p>
           </div>
         </div>
 
