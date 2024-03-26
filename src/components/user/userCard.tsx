@@ -1,15 +1,20 @@
+"use client";
+
+
 import { UserAvatar } from "@/components/avatar";
 import { Button } from "@/components/ui/button";
 import { TbDotsVertical } from "react-icons/tb";
+import { useProfile } from "@/hooks/useProfile";
 
 export function UserCard() {
+  const { user } = useProfile();
   return (
     <>
       <div className="w-full grid grid-cols-[1fr_44px] items-center justify-between">
         <div className="flex items-center justify-start gap-4">
           <UserAvatar />
           <div className="flex flex-col items-start justify-center truncate max-w-[225px]">
-            <h3 className="text-[16px] truncate w-full">Name</h3>
+            <h3 className="text-[16px] truncate w-full">{user?.username}</h3>
             <p className="text-[13px] font-[300] truncate">my account</p>
           </div>
         </div>

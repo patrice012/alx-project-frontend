@@ -2,7 +2,8 @@
 
 import { Button } from "../ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useProfile } from "@/hooks/useProfile";
 
 import { socket } from "@/utils/socket";
 
@@ -15,15 +16,23 @@ import { RiSendPlaneFill } from "react-icons/ri";
 
 import { EmojisPicker } from "./emoji";
 
-export function ChatInput({ discussionId }: { discussionId: string }) {
+export function ChatInput({
+  discussionId,
+  receiverId,
+}: {
+  discussionId: string;
+  receiverId: string;
+}) {
   const [inputState, setInputState] = useState({
     message: "",
     state: "idle",
   });
 
+  const { user } = useProfile();
+
   function dispatchTyping() {
     socket.emit("typing", {
-      userId: "6601b1aff3c1ffaef1ac9bed",
+      userId: user?.id,
     });
   }
 
@@ -46,22 +55,22 @@ export function ChatInput({ discussionId }: { discussionId: string }) {
 
   const sendMessage = () => {
     socket.emit("stopTyping", {
-      userId: "6601b1aff3c1ffaef1ac9bed",
+      userId: user?.id,
     });
 
     if (inputState.message === "") return;
     socket.emit("newMessage", {
-      userId: "6601b1aff3c1ffaef1ac9bed",
+      userId: user?.id,
       message: {
-        senderId: "6601b1aff3c1ffaef1ac9bed",
-        receiverId: "6601b2d3f3c1ffaef1ac9c02",
+        senderId: user?.id,
+        receiverId: receiverId,
         discussionId: discussionId,
         typeOf: "text",
         message: inputState.message,
       },
     });
     setTimeout(() => {
-      socket.emit("discussionList", { userId: "6601b1aff3c1ffaef1ac9bed" });
+      socket.emit("discussionList", { userId: user?.id });
       socket.emit("discussionMessageList", { discussionId: discussionId });
     }, 500);
     setInputState({ ...inputState, message: "", state: "idle" });
