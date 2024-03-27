@@ -1,6 +1,4 @@
-"use client";
-
-import { useState, createContext } from "react";
+import React, { useState, createContext } from "react";
 
 type User = {
   id: string;
@@ -10,27 +8,25 @@ type User = {
   role: string;
 };
 
-// const savedCredentials = sessionStorage.getItem("user");
-
-// const defaultUser: User = {
-//   id: savedCredentials ? JSON.parse(savedCredentials).id : "",
-//   username: savedCredentials ? JSON.parse(savedCredentials).username : "",
-//   email: savedCredentials ? JSON.parse(savedCredentials).email : "",
-//   avatar: savedCredentials ? JSON.parse(savedCredentials).avatar : "",
-//   role: savedCredentials ? JSON.parse(savedCredentials).role : "sender",
-// };
+const id = sessionStorage.getItem("userId");
 
 const defaultUser: User = {
-  id: "",
+  id: id ? JSON.parse(id) : "",
   username: "",
   email: "",
   avatar: "",
   role: "sender",
 };
 
-export const UserContext = createContext<User>(defaultUser);
+export const UserContext = createContext<{
+  user: User;
+  setUser: React.Dispatch<React.SetStateAction<User>>;
+}>({
+  user: defaultUser,
+  setUser: () => {},
+});
 
-export const UserProvider = ({ children }: any) => {
+export const UserProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<User>(defaultUser);
 
   return (

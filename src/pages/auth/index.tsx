@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Card,
   CardContent,
@@ -24,13 +22,17 @@ export default function AuthPage() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const rawFormData = {
-      username: formData.get("loginUsername"),
-      password: formData.get("loginPassword"),
+      username: formData.get("username"),
+      password: formData.get("password"),
     };
 
     try {
-      const data = await postReq(rawFormData, "auth/login");
-      // console.log(data);
+      const { accessToken, refreshToken, userId } = await postReq(
+        rawFormData,
+        "auth/login"
+      );
+      sessionStorage.setItem("token", JSON.stringify(accessToken));
+      sessionStorage.setItem("id", JSON.stringify(userId));
     } catch (e) {
       console.error(e);
     }
@@ -46,7 +48,7 @@ export default function AuthPage() {
     };
 
     try {
-      const { user } = await postReq(rawFormData, "auth/register");
+      const { user, accessToken } = await postReq(rawFormData, "auth/register");
       const data = {
         id: user.id,
         username: user.username,
@@ -56,14 +58,15 @@ export default function AuthPage() {
       };
       setUser(data);
 
-      sessionStorage.setItem("user", JSON.stringify(data));
+      sessionStorage.setItem("token", JSON.stringify(accessToken));
+      sessionStorage.setItem("id", JSON.stringify(user.id));
     } catch (e) {
       console.error(e);
     }
   };
 
   return (
-    <section className="h-screen">
+    <section className="h-screen dark:bg-[#171B1D] dark:text-white">
       <div className="mx-auto flex items-center justify-center h-full">
         <Tabs defaultValue="login" className="w-[400px]">
           <TabsList className="grid w-full grid-cols-2">
@@ -119,7 +122,7 @@ export default function AuthPage() {
                     <Label htmlFor="loginUsername">Username</Label>
                     <Input
                       id="loginUsername"
-                      name="loginUsername"
+                      name="username"
                       type="text"
                     />
                   </div>
@@ -127,7 +130,7 @@ export default function AuthPage() {
                     <Label htmlFor="loginPassword">Password</Label>
                     <Input
                       id="loginPassword"
-                      name="loginPassword"
+                      name="password"
                       type="password"
                     />
                   </div>

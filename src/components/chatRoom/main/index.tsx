@@ -27,12 +27,6 @@ export function ChatSection() {
     }
   }, [discussionList]);
 
-  const accessToken = window.document.cookie
-    .split("; ")
-    .find((cookie) => cookie.startsWith("accessToken="));
-  const accessTokenValue = accessToken?.split("=")[1];
-  console.log(accessTokenValue, accessToken, window.document.cookie);
-
   return (
     <>
       <section className="grid grid-cols-[1fr_260px] w-full  h-screen">

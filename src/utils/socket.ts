@@ -3,10 +3,8 @@ import { io } from "socket.io-client";
 
 console.log(window.document.cookie);
 
-const accessToken = window.document.cookie
-  .split("; ")
-  .find((cookie) => cookie.startsWith("accessToken="));
-const accessTokenValue = accessToken?.split("=")[1];
+const accessToken = window.sessionStorage.getItem("token");
+const accessTokenValue = accessToken ? JSON.parse(accessToken) : "";
 
 // "undefined" means the URL will be computed from the `window.location` object
 const URL: string =
