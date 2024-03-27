@@ -1,8 +1,8 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = import.meta.env.VITE_PUBLIC_API_URL;
 
-const getReq = async (url: any) => {
+const getReq = async (url: string) => {
   // headers
-  let headers = new Headers();
+  const headers = new Headers();
   headers.append("Content-Type", "application/json");
   headers.append("Accept", "application/json");
   headers.append("GET", "POST");

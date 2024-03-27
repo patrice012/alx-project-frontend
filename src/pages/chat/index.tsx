@@ -1,10 +1,9 @@
-"use client";
-
 import Sidebar from "@/components/chatRoom/sidebar";
 import { ChatSection } from "@/components/chatRoom/main";
 import { socket } from "@/utils/socket";
 import { useEffect } from "react";
 import { useProfile } from "@/hooks/useProfile";
+
 
 export default function Home() {
   const { user } = useProfile();
@@ -15,7 +14,7 @@ export default function Home() {
     socket.emit("discussionList", { userId: user?.id });
   }, [user?.id]);
   return (
-    <main className="min-h-screen overflow-y-hidden w-screen dark:bg-[#171B1D]">
+    <main className="min-h-screen overflow-y-hidden w-screen dark:bg-[#171B1D] dark:text-white">
       <div className="grid grid-cols-[450px_1fr]  h-screen border border-gray-700 overflow-hidden">
         <Sidebar />
         <div className="">
