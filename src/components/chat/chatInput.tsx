@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useProfile } from "@/hooks/useProfile";
 
 import { socket } from "@/utils/socket";
+import { checkTypingState } from "@/utils/checkTypingState";
 
 import {
   HiOutlineMicrophone,
@@ -14,54 +15,65 @@ import { RiSendPlaneFill } from "react-icons/ri";
 
 import { EmojisPicker } from "./emoji";
 
-export function ChatInput({
-  discussionId,
-  receiverId,
-}: {
-  discussionId: string;
-  receiverId: string;
-}) {
+export function ChatInput() {
   const [inputState, setInputState] = useState({
     message: "",
-    state: "idle",
   });
+  const [contactDetail, setContactDetail] = useState({} as any);
+  const [discussionId, setDiscussionId] = useState("" as any);
 
   const { user } = useProfile();
 
-  function dispatchTyping() {
-    socket.emit("typing", {
-      userId: user?.id,
-    });
+  function dispatchTyping(state: boolean = false) {
+    if (state) {
+      socket.emit("typing", {
+        userId: user?.id,
+        discussionId: discussionId,
+      });
+    } else {
+      socket.emit("stopTyping", {
+        userId: user?.id,
+        discussionId: discussionId,
+      });
+    }
   }
 
   const AddEmoji = (emoji: any) => {
-    setInputState({ ...inputState, message: `${inputState.message}${emoji}` });
-    dispatchTyping();
+    let message = document.getElementById("message");
+    message.innerText = `${inputState.message}${emoji}`;
   };
 
   const handleUserTyping = (value: string) => {
-    if (value === "") {
-      setInputState({ ...inputState, message: value, state: "idle" });
-      return;
-    }
-    setInputState({ ...inputState, message: value, state: "typing" });
+    dispatchTyping(true);
+    checkTypingState().then((res) => {
+      if (res) {
+        dispatchTyping(false);
+      }
+      setInputState({ ...inputState, message: value });
+    });
   };
 
-  const handleClick = () => {
-    dispatchTyping();
-  };
+  // const handleClick = () => {
+  //   dispatchTyping();
+  // };
+
+  socket.on("loadContactDetail", (data) => {
+    setContactDetail(data.contactDetail);
+  });
+
+  socket.on("activeDiscussion", (data) => {
+    setDiscussionId(data.discussionId);
+  });
 
   const sendMessage = () => {
-    socket.emit("stopTyping", {
-      userId: user?.id,
-    });
+    dispatchTyping(false);
 
     if (inputState.message === "") return;
     socket.emit("newMessage", {
       userId: user?.id,
       message: {
         senderId: user?.id,
-        receiverId: receiverId,
+        receiverId: contactDetail._id,
         discussionId: discussionId,
         typeOf: "text",
         message: inputState.message,
@@ -71,7 +83,8 @@ export function ChatInput({
       socket.emit("discussionList", { userId: user?.id });
       socket.emit("discussionMessageList", { discussionId: discussionId });
     }, 500);
-    setInputState({ ...inputState, message: "", state: "idle" });
+    setInputState({ ...inputState, message: "" });
+    document.getElementById("message")!.innerText = "";
   };
 
   return (
@@ -88,8 +101,8 @@ export function ChatInput({
         </div>
         <div className="flex flex-1 items-center gap-2">
           <Textarea
-            onClick={handleClick}
-            value={inputState.message}
+            id="message"
+            // onClick={handleClick}
             onChange={(e) => handleUserTyping(e.target.value)}
             placeholder="Type your message here."
             className="dark:bg-[#2b2b2b] dark:text-[#fff] w-full p-3 rounded-lg focus:outline-none overflow-y-scroll overflow-x-hidden scrollbar scroll-ml-5 scrollbar-thumb-[#313235] dark:scrollbar-thumb-[#FFFFFF] scrollbar-w-[4px] scrollbar-h-full scrollbar-thumb-rounded-full"

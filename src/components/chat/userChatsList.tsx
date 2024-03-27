@@ -30,6 +30,8 @@ export function UserChatList() {
     });
   });
 
+  console.log(discussionList, "discussionList");
+
   socket.on("discussionList", (data) => {
     console.log(data, "discussionList");
     setDiscussionList(data.discussionList);
