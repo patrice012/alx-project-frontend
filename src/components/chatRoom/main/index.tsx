@@ -1,4 +1,3 @@
-"use client";
 import { ChatHeader } from "./header";
 import {
   UserMessage,

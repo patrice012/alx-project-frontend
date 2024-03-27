@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "../ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";

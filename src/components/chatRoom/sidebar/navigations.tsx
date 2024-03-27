@@ -1,4 +1,4 @@
-import { ModeToggle } from "@/components/theme/toggleTheme";
+import { ModeToggle } from "@/components/theme/mode-toggle";
 
 import {
   UserChatBtn,

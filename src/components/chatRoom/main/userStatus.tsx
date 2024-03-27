@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { UserAvatar } from "@/components/avatar";
 import { socket } from "@/utils/socket";
@@ -14,7 +12,7 @@ export function UserStatus() {
   return (
     <>
       <div className="flex items-center justify-start gap-4">
-        <UserAvatar online={true} />
+        <UserAvatar />
         <div className="flex flex-col items-sfrowmwmtart justify-center truncate max-w-[225px]">
           <h3 className="text-[16px] truncate w-full">Name</h3>
 

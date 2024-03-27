@@ -1,6 +1,3 @@
-"use client";
-
-
 import { UserAvatar } from "@/components/avatar";
 import { Button } from "@/components/ui/button";
 import { TbDotsVertical } from "react-icons/tb";
