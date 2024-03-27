@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button";
+"use client";
+
 import {
   Card,
   CardContent,
@@ -11,7 +12,56 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+import SubmitBtn from "@/components/btn/submitBtn";
+import postReq from "@/utils/postReq";
+import { useProfile } from "@/hooks/useProfile";
+// import { loginProcess, registerProcess } from "@/app/actions";
+
 export default function AuthPage() {
+  const { setUser } = useProfile();
+
+  const loginProcess = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const rawFormData = {
+      username: formData.get("loginUsername"),
+      password: formData.get("loginPassword"),
+    };
+
+    try {
+      const data = await postReq(rawFormData, "auth/login");
+      // console.log(data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const registerProcess = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const rawFormData = {
+      username: formData.get("username"),
+      email: formData.get("email"),
+      password: formData.get("password"),
+    };
+
+    try {
+      const { user } = await postReq(rawFormData, "auth/register");
+      const data = {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        avatar: user.avatar || "",
+        role: user.role || "sender",
+      };
+      setUser(data);
+
+      sessionStorage.setItem("user", JSON.stringify(data));
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <section className="h-screen">
       <div className="mx-auto flex items-center justify-center h-full">
@@ -29,19 +79,30 @@ export default function AuthPage() {
                   services.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-2">
-                <div className="space-y-1">
-                  <Label htmlFor="username">Username</Label>
-                  <Input id="username" defaultValue="" />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="email">Email</Label>
-                  <Input type="email" id="email" defaultValue="" />
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button>Submit</Button>
-              </CardFooter>
+              <form onSubmit={registerProcess}>
+                <CardContent className="space-y-2">
+                  <div className="space-y-1">
+                    <Label htmlFor="username">Username</Label>
+                    <Input id="username" name="username" defaultValue="" />
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      type="email"
+                      name="email"
+                      id="email"
+                      defaultValue=""
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="password">Password</Label>
+                    <Input id="password" name="password" type="password" />
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <SubmitBtn text="Register" />
+                </CardFooter>
+              </form>
             </Card>
           </TabsContent>
           <TabsContent value="login">
@@ -52,19 +113,29 @@ export default function AuthPage() {
                   If you already have an account, please log in to continue.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-2">
-                <div className="space-y-1">
-                  <Label htmlFor="username">Username</Label>
-                  <Input id="username" type="text" />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="password">Password</Label>
-                  <Input id="password" type="password" />
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button>Login</Button>
-              </CardFooter>
+              <form onSubmit={loginProcess}>
+                <CardContent className="space-y-2">
+                  <div className="space-y-1">
+                    <Label htmlFor="loginUsername">Username</Label>
+                    <Input
+                      id="loginUsername"
+                      name="loginUsername"
+                      type="text"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="loginPassword">Password</Label>
+                    <Input
+                      id="loginPassword"
+                      name="loginPassword"
+                      type="password"
+                    />
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <SubmitBtn text="Login" />
+                </CardFooter>
+              </form>
             </Card>
           </TabsContent>
         </Tabs>
