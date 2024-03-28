@@ -9,6 +9,7 @@ import { ProfileDetail } from "@/components/account/ProfileDetail";
 import { socket } from "@/utils/socket";
 import { useState } from "react";
 import { useProfile } from "@/hooks/useProfile";
+import { notificationAlert } from "@/utils/notif";
 
 export function ChatSection() {
   const [discussionList, setDiscussionList] = useState([] as any);
@@ -16,8 +17,17 @@ export function ChatSection() {
   const { user } = useProfile();
 
   socket.on("discussionMessageList", (data) => {
-    setViewChat(true);
-    setDiscussionList(data.discussionMessageList);
+    const { discussionMessageList, error, message } = data;
+    if (!error) {
+      setViewChat(true);
+      setDiscussionList(discussionMessageList);
+    } else {
+      notificationAlert().then((toast) => {
+        toast(`${message || "Something went wrong!"}`, {
+          description: `${error || "Please try again later"}`,
+        });
+      });
+    }
   });
 
   socket.on("newChatMessage", (data) => {

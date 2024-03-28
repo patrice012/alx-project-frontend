@@ -1,17 +1,27 @@
 import { useState } from "react";
 import { UserAvatar } from "@/components/avatar";
 import { socket } from "@/utils/socket";
+import { notificationAlert } from "@/utils/notif";
 
 export function UserStatus() {
   const [typingUser, setTypingUser] = useState("");
   const [contactDetail, setContactDetail] = useState({} as any);
 
   socket.on("typing", (data) => {
-    setTypingUser(data.message);
+    const { error, message } = data;
+    if (!error) {
+      setTypingUser(message);
+    } else {
+      notificationAlert().then((toast) => {
+        toast(`${error || "Error"}}`, {
+          description: message,
+        });
+      });
+    }
   });
 
   socket.on("loadContactDetail", (data) => {
-    console.log(data, "data")
+    console.log(data, "data");
     setContactDetail(data.contactDetail);
   });
 

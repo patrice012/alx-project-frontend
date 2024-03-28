@@ -15,7 +15,7 @@ import { GoPlus } from "react-icons/go";
 import { useState } from "react";
 import { socket } from "@/utils/socket";
 import { useProfile } from "@/hooks/useProfile";
-import { toast } from "sonner";
+import { notificationAlert } from "@/utils/notif";
 
 export function AddAccount() {
   const { user } = useProfile();
@@ -33,17 +33,31 @@ export function AddAccount() {
     try {
       socket.emit("findUserAndStartDiscussion", { data: rawFormData });
       socket.on("startNewDiscussion", (data) => {
-        console.log(data);
         setOpen(false);
-        toast("New discussion created", {
-          description: `Start chatting now! with ${
-            data?.newDiscussion?.receiver || "the new user"
-          }.`,
-          action: {
-            label: "Mark as read",
-            onClick: () => console.log("Read"),
-          },
-        });
+        const { newDiscussion, message, error } = data;
+        if (!error) {
+          notificationAlert().then((toast) => {
+            toast(`${message || "New discussion created"}`, {
+              description: `Start chatting now! with ${
+                newDiscussion?.receiver || "the new user"
+              }.`,
+              action: {
+                label: "Mark as read",
+                onClick: () => console.log("Read"),
+              },
+            });
+          });
+        } else {
+          notificationAlert().then((toast) => {
+            toast(`${message || "Something went wrong!"}`, {
+              description: `${error || "Please try again later"}`,
+              action: {
+                label: "Retry",
+                onClick: () => setOpen(true),
+              },
+            });
+          });
+        }
       });
     } catch (e) {
       console.error(e);

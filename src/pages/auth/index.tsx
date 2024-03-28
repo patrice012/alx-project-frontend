@@ -13,7 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SubmitBtn from "@/components/btn/submitBtn";
 import postReq from "@/utils/postReq";
 import { useProfile } from "@/hooks/useProfile";
-// import { loginProcess, registerProcess } from "@/app/actions";
+import { notificationAlert } from "@/utils/notif";
 
 import { useState } from "react";
 
@@ -38,7 +38,18 @@ export default function AuthPage() {
       sessionStorage.setItem("token", JSON.stringify(accessToken));
       sessionStorage.setItem("id", JSON.stringify(userId));
 
-      window.location.href = "/";
+      notificationAlert().then((toast) => {
+        toast("Login successful", {
+          description: "Welcome back!",
+          action: {
+            label: "Go to home",
+            onClick: () => (window.location.href = "/"),
+          },
+        });
+      });
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 500);
     } catch (e) {
       console.error(e);
     } finally {
@@ -69,7 +80,15 @@ export default function AuthPage() {
 
       sessionStorage.setItem("token", JSON.stringify(accessToken));
       sessionStorage.setItem("id", JSON.stringify(user.id));
-      window.location.href = "/";
+
+      notificationAlert().then((toast) => {
+        toast("Registration successful", {
+          description: "Welcome to our platform!",
+        });
+      });
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 500);
     } catch (e) {
       console.error(e);
     } finally {

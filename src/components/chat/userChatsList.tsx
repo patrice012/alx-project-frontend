@@ -2,44 +2,68 @@ import { Badge } from "../ui/badge";
 import { ChatPreview } from "./chatPreview";
 import { socket } from "@/utils/socket";
 import { useState } from "react";
+import { notificationAlert } from "@/utils/notif";
 
 export function UserChatList() {
   const [discussionList, setDiscussionList] = useState([] as any);
 
   socket.on("newDiscussion", (data) => {
-    setDiscussionList((prev: any) => {
-      const disc = data.newDiscussion;
-      console.log(data, "discussionList", disc);
-      const discId = disc._id;
+    const { newDiscussion, error, message } = data;
 
-      if (prev.length === 0) {
-        return [disc];
-      }
+    if (!error) {
+      setDiscussionList((prev: any) => {
+        const disc = newDiscussion;
+        const discId = disc._id;
 
-      const idx = prev.findIndex((d: any) => d._id === discId);
-      if (idx === -1) {
-        return [disc, ...prev];
-      } else {
-        return prev.map((d: any) => {
-          if (d._id === discId) {
-            return disc;
-          }
-          return d;
+        if (prev.length === 0) {
+          return [disc];
+        }
+
+        const idx = prev.findIndex((d: any) => d._id === discId);
+        if (idx === -1) {
+          return [disc, ...prev];
+        } else {
+          return prev.map((d: any) => {
+            if (d._id === discId) {
+              return disc;
+            }
+            return d;
+          });
+        }
+      });
+    } else {
+      notificationAlert().then((toast) => {
+        toast(`${message || "Something went wrong!"}`, {
+          description: `${error || "Please try again later"}`,
         });
-      }
-    });
+      });
+    }
   });
 
-  console.log(discussionList, "discussionList");
-
   socket.on("discussionList", (data) => {
-    console.log(data, "discussionList");
-    setDiscussionList(data.discussionList);
+    const { discussionList, error, message } = data;
+    if (!error) setDiscussionList(discussionList);
+    else {
+      notificationAlert.then((toast) => {
+        toast(`${message || "Something went wrong!"}`, {
+          description: `${error || "Please try again later"}`,
+        });
+      });
+    }
   });
 
   socket.on("newMessage", (data) => {
-    const discId = data.newMessage.discussionId;
-    socket.emit("newDiscussion", { discussionId: discId });
+    const { error, message, newMessage } = data;
+    if (!error) {
+      const discId = newMessage.discussionId;
+      socket.emit("newDiscussion", { discussionId: discId });
+    } else {
+      notificationAlert().then((toast) => {
+        toast(`${message || "Something went wrong!"}`, {
+          description: `${error || "Please try again later"}`,
+        });
+      });
+    }
   });
 
   return (
