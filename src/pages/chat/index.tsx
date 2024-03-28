@@ -3,7 +3,7 @@ import { ChatSection } from "@/components/chatRoom/main";
 import { socket } from "@/utils/socket";
 import { useEffect } from "react";
 import { useProfile } from "@/hooks/useProfile";
-import { redirect } from "react-router-dom";
+import { notificationAlert } from "@/utils/notif";
 
 export default function Home() {
   const { user, setUser } = useProfile();
@@ -15,16 +15,51 @@ export default function Home() {
 
   socket.on("logged", (data) => {
     setUser(data.user);
+    notificationAlert().then((toast) => {
+      toast("Welcome back!", {
+        description: "You are now logged in",
+      });
+    });
   });
 
   socket.on("login", (data) => {
-    // console.log(data);
-    return redirect("/auth");
+    const { error, message } = data;
+    if (error) {
+      notificationAlert().then((toast) => {
+        toast(`${message || "Something went wrong!"}`, {
+          description: `${error || "Please try again later"}`,
+        });
+      });
+    } else {
+      window.location.href = "/auth";
+    }
+  });
+
+  socket.on("joinChat", (data) => {
+    const { error, message } = data;
+    if (error) {
+      notificationAlert().then((toast) => {
+        toast(`${message || "Something went wrong!"}`, {
+          description: `${error || "Please try again later"}`,
+        });
+      });
+    }
+  });
+
+  socket.on("leaveChat", (data) => {
+    const { error, message } = data;
+    if (error) {
+      notificationAlert().then((toast) => {
+        toast(`${message || "Something went wrong!"}`, {
+          description: `${error || "Please try again later"}`,
+        });
+      });
+    }
   });
 
   return (
     <main className="min-h-screen overflow-y-hidden w-screen dark:bg-[#171B1D] dark:text-white">
-      <div className="grid grid-cols-[450px_1fr]  h-screen border border-gray-700 overflow-hidden">
+      <div className="lg:grid block xl:grid-cols-[450px_1fr]  lg:grid-cols-[400px_1fr] sm:grid-cols-[350px_1fr]   h-screen border border-gray-700 overflow-hidden">
         <Sidebar />
         <div className="">
           <ChatSection />

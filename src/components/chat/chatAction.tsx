@@ -1,14 +1,20 @@
-import { Button } from "@/components/ui/button";
 import { TbDotsVertical } from "react-icons/tb";
 import { IoCallOutline } from "react-icons/io5";
 import { HiOutlineCamera } from "react-icons/hi2";
 
+import { TooltipBtn } from "../btn/tooltipBtn";
+
 const CallActionBtn = () => {
   return (
     <>
-      <Button variant="circle" size="icon" className="w-[46px] h-[46px]">
+      <TooltipBtn
+        tooltiptext={"Start Call"}
+        variant="circle"
+        size="icon"
+        className="w-[46px] h-[46px]"
+      >
         <IoCallOutline className="h-[1.3rem] w-[1.3rem] transition-all" />
-      </Button>
+      </TooltipBtn>
     </>
   );
 };
@@ -16,9 +22,14 @@ const CallActionBtn = () => {
 const RecordActionBtn = () => {
   return (
     <>
-      <Button variant="circle" size="icon" className="w-[46px] h-[46px]">
+      <TooltipBtn
+        tooltiptext={"Start video call"}
+        variant="circle"
+        size="icon"
+        className="w-[46px] h-[46px]"
+      >
         <HiOutlineCamera className="h-[1.3rem] w-[1.3rem] transition-all" />
-      </Button>
+      </TooltipBtn>
     </>
   );
 };
@@ -26,9 +37,14 @@ const RecordActionBtn = () => {
 const ChatSettings = () => {
   return (
     <>
-      <Button variant="circle" size="icon" className="w-[46px] h-[46px]">
+      <TooltipBtn
+        tooltiptext={"Chat Settings"}
+        variant="circle"
+        size="icon"
+        className="w-[46px] h-[46px]"
+      >
         <TbDotsVertical className="h-[1.3rem] w-[1.3rem] transition-all" />
-      </Button>
+      </TooltipBtn>
     </>
   );
 };

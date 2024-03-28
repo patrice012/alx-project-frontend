@@ -13,13 +13,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SubmitBtn from "@/components/btn/submitBtn";
 import postReq from "@/utils/postReq";
 import { useProfile } from "@/hooks/useProfile";
-// import { loginProcess, registerProcess } from "@/app/actions";
+import { notificationAlert } from "@/utils/notif";
+
+import { useState } from "react";
 
 export default function AuthPage() {
   const { setUser } = useProfile();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const loginProcess = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
     const formData = new FormData(e.currentTarget);
     const rawFormData = {
       username: formData.get("username"),
@@ -33,13 +37,29 @@ export default function AuthPage() {
       );
       sessionStorage.setItem("token", JSON.stringify(accessToken));
       sessionStorage.setItem("id", JSON.stringify(userId));
+
+      notificationAlert().then((toast) => {
+        toast("Login successful", {
+          description: "Welcome back!",
+          action: {
+            label: "Go to home",
+            onClick: () => (window.location.href = "/"),
+          },
+        });
+      });
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 500);
     } catch (e) {
       console.error(e);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const registerProcess = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
     const formData = new FormData(e.currentTarget);
     const rawFormData = {
       username: formData.get("username"),
@@ -60,8 +80,19 @@ export default function AuthPage() {
 
       sessionStorage.setItem("token", JSON.stringify(accessToken));
       sessionStorage.setItem("id", JSON.stringify(user.id));
+
+      notificationAlert().then((toast) => {
+        toast("Registration successful", {
+          description: "Welcome to our platform!",
+        });
+      });
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 500);
     } catch (e) {
       console.error(e);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -103,7 +134,9 @@ export default function AuthPage() {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <SubmitBtn text="Register" />
+                  <SubmitBtn
+                    text={isSubmitting ? "Processing..." : "Register"}
+                  />
                 </CardFooter>
               </form>
             </Card>
@@ -120,23 +153,15 @@ export default function AuthPage() {
                 <CardContent className="space-y-2">
                   <div className="space-y-1">
                     <Label htmlFor="loginUsername">Username</Label>
-                    <Input
-                      id="loginUsername"
-                      name="username"
-                      type="text"
-                    />
+                    <Input id="loginUsername" name="username" type="text" />
                   </div>
                   <div className="space-y-1">
                     <Label htmlFor="loginPassword">Password</Label>
-                    <Input
-                      id="loginPassword"
-                      name="password"
-                      type="password"
-                    />
+                    <Input id="loginPassword" name="password" type="password" />
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <SubmitBtn text="Login" />
+                  <SubmitBtn text={isSubmitting ? "Processing..." : "Login"} />
                 </CardFooter>
               </form>
             </Card>

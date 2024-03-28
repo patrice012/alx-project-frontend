@@ -1,4 +1,4 @@
-import { Button } from "../ui/button";
+import { TooltipBtn } from "../btn/tooltipBtn";
 import { IoClose } from "react-icons/io5";
 
 export function ContactProfileHeader() {
@@ -6,9 +6,15 @@ export function ContactProfileHeader() {
     <>
       <div className="flex items-center justify-between px-5">
         <p>Contact detail</p>
-        <Button variant="circle" size="icon" className="w-[46px] h-[46px]">
+
+        <TooltipBtn
+          tooltiptext={"close"}
+          variant="circle"
+          size="icon"
+          className="w-[46px] h-[46px]"
+        >
           <IoClose className="h-[1.3rem] w-[1.3rem] transition-all" />
-        </Button>
+        </TooltipBtn>
       </div>
     </>
   );

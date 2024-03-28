@@ -8,8 +8,10 @@ import {
   RecordBtn,
   BookMark,
   Settings,
-  AddAccount,
+  // AddAccount,
 } from "./btns";
+
+import { AddAccount } from "@/components/chat/startDiscussion";
 
 import { UserAvatar } from "@/components/avatar";
 

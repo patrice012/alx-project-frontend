@@ -10,10 +10,16 @@ interface ChatPreviewProps {
   _id: string;
 }
 
+import { useProfile } from "@/hooks/useProfile";
+
 export function ChatPreview({ discussion }: { discussion: ChatPreviewProps }) {
   const handleClick = () => {
+    socket.emit("joinChat", { discussionId: discussion._id });
     socket.emit("discussionMessageList", { discussionId: discussion._id });
   };
+
+  const { user } = useProfile();
+
   return (
     <>
       <div
@@ -23,7 +29,11 @@ export function ChatPreview({ discussion }: { discussion: ChatPreviewProps }) {
         <div className="flex items-center justify-start gap-4">
           <UserAvatar />
           <div className="flex flex-col items-start justify-center">
-            <h3 className="text-[16px]">{discussion?.sender}</h3>
+            <h3 className="text-[16px]">
+              {discussion?.receiverId == user.id
+                ? discussion?.sender
+                : discussion?.receiver}
+            </h3>
             <p className="text-[13px] font-[300]">{discussion?.lastMessage}</p>
           </div>
         </div>
