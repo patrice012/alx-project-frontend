@@ -2,12 +2,13 @@ import { UserAvatar } from "@/components/avatar";
 import { Button } from "@/components/ui/button";
 import { TbDotsVertical } from "react-icons/tb";
 import { useProfile } from "@/hooks/useProfile";
+import { IoClose } from "react-icons/io5";
 
 export function UserCard() {
   const { user } = useProfile();
   return (
     <>
-      <div className="w-full grid grid-cols-[1fr_44px] items-center justify-between">
+      <div className="w-full grid lg:grid-cols-[1fr_44px] grid-cols-[1fr_100px] items-center justify-between">
         <div className="flex items-center justify-start gap-4">
           <UserAvatar />
           <div className="flex flex-col items-start justify-center truncate max-w-[225px]">
@@ -16,9 +17,16 @@ export function UserCard() {
           </div>
         </div>
 
-        <Button variant="circle" size="icon" className="w-[46px] h-[46px]">
-          <TbDotsVertical className="h-[1.3rem] w-[1.3rem] transition-all" />
-        </Button>
+        <div className="flex items-center justify-center gap-3">
+          <Button variant="circle" size="icon" className="w-[46px] h-[46px]">
+            <TbDotsVertical className="h-[1.3rem] w-[1.3rem] transition-all" />
+          </Button>
+          <Button onClick={() => {
+            document.getElementById("sidebar")?.classList.toggle("hidden");
+          }} variant="circle" size="icon" className="w-[46px] h-[46px] lg:hidden">
+            <IoClose className="h-[1.3rem] w-[1.3rem] transition-all" />
+          </Button>
+        </div>
       </div>
     </>
   );

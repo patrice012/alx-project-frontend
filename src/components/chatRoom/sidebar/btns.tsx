@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { PiWechatLogoThin } from "react-icons/pi";
 import { IoCallOutline } from "react-icons/io5";
 import { CiBookmark, CiSettings } from "react-icons/ci";
@@ -6,13 +5,19 @@ import { GoPlus } from "react-icons/go";
 import { IoChatbubblesOutline } from "react-icons/io5";
 import { PiUsersLight } from "react-icons/pi";
 import { HiOutlineCamera } from "react-icons/hi2";
+import { TooltipBtn } from "@/components/btn/tooltipBtn";
 
 export const ChatBtn = () => {
   return (
     <>
-      <Button variant="circle" size="icon" className="w-[46px] h-[46px]">
+      <TooltipBtn
+        tooltiptext={"Start Chat"}
+        variant="circle"
+        size="icon"
+        className="w-[46px] h-[46px]"
+      >
         <IoChatbubblesOutline className="h-[1.3rem] w-[1.3rem] transition-all" />
-      </Button>
+      </TooltipBtn>
     </>
   );
 };
@@ -20,9 +25,14 @@ export const ChatBtn = () => {
 export const UserChatBtn = () => {
   return (
     <>
-      <Button variant="circle" size="icon" className="w-[46px] h-[46px]">
+      <TooltipBtn
+        tooltiptext={"Active Chats"}
+        variant="circle"
+        size="icon"
+        className="w-[46px] h-[46px]"
+      >
         <PiWechatLogoThin className="h-[1.3rem] w-[1.3rem] transition-all" />
-      </Button>
+      </TooltipBtn>
     </>
   );
 };
@@ -30,9 +40,14 @@ export const UserChatBtn = () => {
 export const UserChat = () => {
   return (
     <>
-      <Button variant="circle" size="icon" className="w-[46px] h-[46px]">
+      <TooltipBtn
+        tooltiptext={"Users"}
+        variant="circle"
+        size="icon"
+        className="w-[46px] h-[46px]"
+      >
         <PiUsersLight className="h-[1.3rem] w-[1.3rem] transition-all" />
-      </Button>
+      </TooltipBtn>
     </>
   );
 };
@@ -40,9 +55,14 @@ export const UserChat = () => {
 export const CallBtn = () => {
   return (
     <>
-      <Button variant="circle" size="icon" className="w-[46px] h-[46px]">
+      <TooltipBtn
+        tooltiptext={"Call"}
+        variant="circle"
+        size="icon"
+        className="w-[46px] h-[46px]"
+      >
         <IoCallOutline className="h-[1.3rem] w-[1.3rem] transition-all" />
-      </Button>
+      </TooltipBtn>
     </>
   );
 };
@@ -50,9 +70,14 @@ export const CallBtn = () => {
 export const RecordBtn = () => {
   return (
     <>
-      <Button variant="circle" size="icon" className="w-[46px] h-[46px]">
+      <TooltipBtn
+        tooltiptext={"Record video"}
+        variant="circle"
+        size="icon"
+        className="w-[46px] h-[46px]"
+      >
         <HiOutlineCamera className="h-[1.3rem] w-[1.3rem] transition-all" />
-      </Button>
+      </TooltipBtn>
     </>
   );
 };
@@ -60,9 +85,14 @@ export const RecordBtn = () => {
 export const BookMark = () => {
   return (
     <>
-      <Button variant="circle" size="icon" className="w-[46px] h-[46px]">
+      <TooltipBtn
+        tooltiptext={"Bookmark messages"}
+        variant="circle"
+        size="icon"
+        className="w-[46px] h-[46px]"
+      >
         <CiBookmark className="h-[1.3rem] w-[1.3rem] transition-all" />
-      </Button>
+      </TooltipBtn>
     </>
   );
 };
@@ -70,9 +100,14 @@ export const BookMark = () => {
 export const Settings = () => {
   return (
     <>
-      <Button variant="circle" size="icon" className="w-[46px] h-[46px]">
+      <TooltipBtn
+        tooltiptext={"Settings"}
+        variant="circle"
+        size="icon"
+        className="w-[46px] h-[46px]"
+      >
         <CiSettings className="h-[1.3rem] w-[1.3rem] transition-all" />
-      </Button>
+      </TooltipBtn>
     </>
   );
 };
@@ -80,9 +115,14 @@ export const Settings = () => {
 export const AddAccount = () => {
   return (
     <>
-      <Button variant="circle" size="icon" className="w-[46px] h-[46px]">
+      <TooltipBtn
+        tooltiptext={"Start new chat"}
+        variant="circle"
+        size="icon"
+        className="w-[46px] h-[46px]"
+      >
         <GoPlus className="h-[1.3rem] w-[1.3rem] transition-all" />
-      </Button>
+      </TooltipBtn>
     </>
   );
 };

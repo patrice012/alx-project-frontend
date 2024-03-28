@@ -59,7 +59,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen overflow-y-hidden w-screen dark:bg-[#171B1D] dark:text-white">
-      <div className="grid grid-cols-[450px_1fr]  h-screen border border-gray-700 overflow-hidden">
+      <div className="lg:grid block xl:grid-cols-[450px_1fr]  lg:grid-cols-[400px_1fr] sm:grid-cols-[350px_1fr]   h-screen border border-gray-700 overflow-hidden">
         <Sidebar />
         <div className="">
           <ChatSection />

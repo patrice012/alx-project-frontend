@@ -1,4 +1,4 @@
-import { Button } from "../ui/button";
+import { TooltipBtn } from "../btn/tooltipBtn";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { useProfile } from "@/hooks/useProfile";
@@ -88,12 +88,23 @@ export function ChatInput() {
       <div className="flex items-center justify-between gap-4 py-4 px-3 w-full dark:bg-[#1f1f1f] bg-white rounded-t border-t border-slate-200  dark:border-slate-800">
         <div className="flex items-center gap-4">
           <EmojisPicker AddEmoji={AddEmoji} />
-          <Button variant="circle" size="icon" className="w-[46px] h-[46px]">
+          <TooltipBtn
+            tooltiptext={"Attach File"}
+            variant="circle"
+            size="icon"
+            className="w-[46px] h-[46px]"
+          >
             <HiOutlinePaperClip className="h-[1.3rem] w-[1.3rem] transition-all" />
-          </Button>
-          <Button variant="circle" size="icon" className="w-[46px] h-[46px]">
+          </TooltipBtn>
+
+          <TooltipBtn
+            tooltiptext={"Record Video"}
+            variant="circle"
+            size="icon"
+            className="w-[46px] h-[46px]"
+          >
             <HiOutlineCamera className="h-[1.3rem] w-[1.3rem] transition-all" />
-          </Button>
+          </TooltipBtn>
         </div>
         <div className="flex flex-1 items-center gap-2">
           <Textarea
@@ -103,17 +114,23 @@ export function ChatInput() {
             placeholder="Type your message here."
             className="dark:bg-[#2b2b2b] dark:text-[#fff] w-full p-3 rounded-lg focus:outline-none overflow-y-scroll overflow-x-hidden scrollbar scroll-ml-5 scrollbar-thumb-[#313235] dark:scrollbar-thumb-[#FFFFFF] scrollbar-w-[4px] scrollbar-h-full scrollbar-thumb-rounded-full"
           />{" "}
-          <Button
+          <TooltipBtn
+            tooltiptext={"Send Message"}
             onClick={sendMessage}
             variant="circle"
             size="icon"
             className="w-[50px] h-[46px]"
           >
             <RiSendPlaneFill className="h-[1.3rem] w-[1.3rem] transition-all" />
-          </Button>
-          <Button variant="circle" size="icon" className="w-[50px] h-[46px]">
+          </TooltipBtn>
+          <TooltipBtn
+            tooltiptext={"Start Voice Message"}
+            variant="circle"
+            size="icon"
+            className="w-[50px] h-[46px]"
+          >
             <HiOutlineMicrophone className="h-[1.3rem] w-[1.3rem] transition-all" />
-          </Button>
+          </TooltipBtn>
         </div>
       </div>
     </>

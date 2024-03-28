@@ -1,9 +1,12 @@
 import { Button } from "../ui/button";
+import { TooltipBtn } from "../btn/tooltipBtn";
 
 import { MdReply } from "react-icons/md";
-import { GrEmoji } from "react-icons/gr";
 import { TbDotsVertical } from "react-icons/tb";
 import { PiShareFatLight } from "react-icons/pi";
+import { EmojisPickerReactions } from "./contactReaction";
+import { useState } from "react";
+import { GrEmoji } from "react-icons/gr";
 
 export function DefaultChatMessage() {
   return (
@@ -24,11 +27,15 @@ export function DefaultChatMessage() {
 }
 
 export function ContactMessage({ data }: any) {
+  const [open, setOpen] = useState(false);
+  function AddEmoji(emoji: string) {
+    console.log(emoji);
+  }
   return (
     <>
       <div className="w-full relative grid grid-cols-2 gap-5 items-start justify-start">
         <div className="space-y-3">
-          <div className="bg-gray-700 p-3 rounded-[16px] rounded-tl-[0px]">
+          <div className="bg-gray-700 p-3 rounded-[16px] rounded-tl-[0px] text-white">
             <p>{data.message}</p>
           </div>
           <div className="relative">
@@ -39,15 +46,40 @@ export function ContactMessage({ data }: any) {
         </div>
 
         <div className="flex items-center gap-3">
-          <Button variant="circle" size="icon" className="w-[30px] h-[30px]">
+          <TooltipBtn
+            tooltiptext={"Reply"}
+            variant="circle"
+            size="icon"
+            className="w-[30px] h-[30px]"
+          >
             <MdReply className="h-[.9rem] w-[.9rem] transition-all" />
-          </Button>
-          <Button variant="circle" size="icon" className="w-[30px] h-[30px]">
+          </TooltipBtn>
+          <TooltipBtn
+            tooltiptext={"Add Reaction"}
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              setOpen(true);
+            }}
+            variant="circle"
+            size="icon"
+            className="w-[30px] h-[30px]"
+          >
             <GrEmoji className="h-[.9rem] w-[.9rem] transition-all" />
-          </Button>
-          <Button variant="circle" size="icon" className="w-[30px] h-[30px]">
+          </TooltipBtn>
+          <EmojisPickerReactions
+            AddEmoji={AddEmoji}
+            open={open}
+            setOpen={setOpen}
+          />
+          <TooltipBtn
+            tooltiptext={"Settings"}
+            variant="circle"
+            size="icon"
+            className="w-[30px] h-[30px]"
+          >
             <TbDotsVertical className="h-[.9rem] w-[.9rem] transition-all" />
-          </Button>
+          </TooltipBtn>
         </div>
       </div>
     </>
@@ -59,15 +91,25 @@ export function UserMessage({ data }: any) {
     <>
       <div className="w-full relative grid grid-cols-2 gap-5 items-start justify-start">
         <div className="flex items-center gap-3 justify-end">
-          <Button variant="circle" size="icon" className="w-[30px] h-[30px]">
+          <TooltipBtn
+            tooltiptext={"Share the message"}
+            variant="circle"
+            size="icon"
+            className="w-[30px] h-[30px]"
+          >
             <PiShareFatLight className="h-[.9rem] w-[.9rem] transition-all" />
-          </Button>
-          <Button variant="circle" size="icon" className="w-[30px] h-[30px]">
+          </TooltipBtn>
+          <TooltipBtn
+            tooltiptext={"Settings"}
+            variant="circle"
+            size="icon"
+            className="w-[30px] h-[30px]"
+          >
             <TbDotsVertical className="h-[.9rem] w-[.9rem] transition-all" />
-          </Button>
+          </TooltipBtn>
         </div>
         <div className="space-y-3">
-          <div className=" bg-teal-500 p-3 rounded-[16px] rounded-tr-[0px]">
+          <div className=" bg-teal-500 p-3 rounded-[16px] rounded-tr-[0px] ">
             <p>{data.message}</p>
           </div>
           <div className="relative">
