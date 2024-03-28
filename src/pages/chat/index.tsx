@@ -3,7 +3,6 @@ import { ChatSection } from "@/components/chatRoom/main";
 import { socket } from "@/utils/socket";
 import { useEffect } from "react";
 import { useProfile } from "@/hooks/useProfile";
-import { redirect } from "react-router-dom";
 
 export default function Home() {
   const { user, setUser } = useProfile();
@@ -18,8 +17,8 @@ export default function Home() {
   });
 
   socket.on("login", (data) => {
-    // console.log(data);
-    return redirect("/auth");
+    // console.log(data, "from login");
+    window.location.href = "/auth";
   });
 
   return (

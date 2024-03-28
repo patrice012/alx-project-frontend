@@ -12,12 +12,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import { GoPlus } from "react-icons/go";
+import { useState } from "react";
 import { socket } from "@/utils/socket";
 import { useProfile } from "@/hooks/useProfile";
-
+import { toast } from "sonner";
 
 export function AddAccount() {
   const { user } = useProfile();
+  const [open, setOpen] = useState(false);
 
   const findingProcess = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,12 +32,25 @@ export function AddAccount() {
 
     try {
       socket.emit("findUserAndStartDiscussion", { data: rawFormData });
+      socket.on("startNewDiscussion", (data) => {
+        console.log(data);
+        setOpen(false);
+        toast("New discussion created", {
+          description: `Start chatting now! with ${
+            data?.newDiscussion?.receiver || "the new user"
+          }.`,
+          action: {
+            label: "Mark as read",
+            onClick: () => console.log("Read"),
+          },
+        });
+      });
     } catch (e) {
       console.error(e);
     }
   };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="circle" size="icon" className="w-[46px] h-[46px]">
           <GoPlus className="h-[1.3rem] w-[1.3rem] transition-all" />

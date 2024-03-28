@@ -11,6 +11,7 @@ export function UserStatus() {
   });
 
   socket.on("loadContactDetail", (data) => {
+    console.log(data, "data")
     setContactDetail(data.contactDetail);
   });
 
