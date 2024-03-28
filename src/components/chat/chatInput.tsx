@@ -38,24 +38,19 @@ export function ChatInput() {
     }
   }
 
-  const AddEmoji = (emoji: any) => {
-    let message = document.getElementById("message");
-    message.innerText = `${inputState.message}${emoji}`;
+  const AddEmoji = (emoji: string) => {
+    setInputState({ ...inputState, message: inputState.message + emoji });
   };
 
   const handleUserTyping = (value: string) => {
     dispatchTyping(true);
+    setInputState({ ...inputState, message: value });
     checkTypingState().then((res) => {
       if (res) {
         dispatchTyping(false);
       }
-      setInputState({ ...inputState, message: value });
     });
   };
-
-  // const handleClick = () => {
-  //   dispatchTyping();
-  // };
 
   socket.on("loadContactDetail", (data) => {
     setContactDetail(data.contactDetail);
@@ -79,12 +74,13 @@ export function ChatInput() {
         message: inputState.message,
       },
     });
+
+    // Load discussion list and message list
     setTimeout(() => {
       socket.emit("discussionList", { userId: user?.id });
       socket.emit("discussionMessageList", { discussionId: discussionId });
     }, 500);
     setInputState({ ...inputState, message: "" });
-    document.getElementById("message")!.innerText = "";
   };
 
   return (
@@ -102,8 +98,8 @@ export function ChatInput() {
         <div className="flex flex-1 items-center gap-2">
           <Textarea
             id="message"
-            // onClick={handleClick}
             onChange={(e) => handleUserTyping(e.target.value)}
+            value={inputState.message}
             placeholder="Type your message here."
             className="dark:bg-[#2b2b2b] dark:text-[#fff] w-full p-3 rounded-lg focus:outline-none overflow-y-scroll overflow-x-hidden scrollbar scroll-ml-5 scrollbar-thumb-[#313235] dark:scrollbar-thumb-[#FFFFFF] scrollbar-w-[4px] scrollbar-h-full scrollbar-thumb-rounded-full"
           />{" "}

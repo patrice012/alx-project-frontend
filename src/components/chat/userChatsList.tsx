@@ -44,7 +44,7 @@ export function UserChatList() {
     const { discussionList, error, message } = data;
     if (!error) setDiscussionList(discussionList);
     else {
-      notificationAlert.then((toast) => {
+      notificationAlert().then((toast) => {
         toast(`${message || "Something went wrong!"}`, {
           description: `${error || "Please try again later"}`,
         });
