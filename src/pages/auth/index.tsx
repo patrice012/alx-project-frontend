@@ -31,12 +31,13 @@ export default function AuthPage() {
     };
 
     try {
-      const { accessToken, refreshToken, userId } = await postReq(
+      const { accessToken, refreshToken, user } = await postReq(
         rawFormData,
         "auth/login"
       );
+
       sessionStorage.setItem("token", JSON.stringify(accessToken));
-      sessionStorage.setItem("id", JSON.stringify(userId));
+      sessionStorage.setItem("id", JSON.stringify(user.id));
 
       notificationAlert().then((toast) => {
         toast("Login successful", {
