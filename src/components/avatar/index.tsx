@@ -9,12 +9,14 @@ export function UserAvatar() {
   socket.on("userOnline", (data) => {
     setIsOnline(data.isOnline);
   });
-  
+
   return (
-    <Avatar>
-      {isOnline ? <BadgeIndicator /> : null}
-      <AvatarImage src="/avatar.png" />
-      <AvatarFallback>CN</AvatarFallback>
-    </Avatar>
+    <>
+      <Avatar>
+        {isOnline ? <BadgeIndicator /> : null}
+        <AvatarImage src="/avatar.png" />
+        <AvatarFallback>CN</AvatarFallback>
+      </Avatar>
+    </>
   );
 }

@@ -15,10 +15,11 @@ export function DefaultChatMessage() {
         <div className="flex items-center justify-center mx-auto h-full">
           <div className="space-y-3">
             <span>
+              {" "}
               Send and receive messages without keeping your phone online.No
               price
-            </span>
-            <span>Only your email is require, login and start chat.</span>
+            </span>{" "}
+            <span> Only your email is require, login and start chat.</span>
           </div>
         </div>
       </div>
