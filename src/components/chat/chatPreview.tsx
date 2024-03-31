@@ -6,8 +6,10 @@ interface ChatPreviewProps {
   sender: string;
   lastMessage: string;
   receiver: string;
+  receiverId: string;
   time: string;
   _id: string;
+  updated_at: string;
 }
 
 import { useProfile } from "@/hooks/useProfile";
@@ -27,6 +29,7 @@ export function ChatPreview({ discussion }: { discussion: ChatPreviewProps }) {
   if (lastMessage.includes(lastMsg)) {
     lastMessage = lastMessage.replace(user.username, "You");
   }
+
   return (
     <>
       <div
@@ -46,8 +49,8 @@ export function ChatPreview({ discussion }: { discussion: ChatPreviewProps }) {
         </div>
 
         <div className="flex flex-col items-center justify-center">
-          {/* <MessageStatus /> */}
-          <NewMessageBadge />
+          <MessageStatus data={discussion?.updated_at} />
+          <NewMessageBadge data={discussion?.updated_at} />
         </div>
       </div>
     </>

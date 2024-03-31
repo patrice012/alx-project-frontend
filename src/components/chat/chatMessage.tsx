@@ -8,6 +8,8 @@ import { EmojisPickerReactions } from "./contactReaction";
 import { useState } from "react";
 import { GrEmoji } from "react-icons/gr";
 
+import { formatDate } from "@/utils/formatDate";
+
 export function DefaultChatMessage() {
   return (
     <>
@@ -30,7 +32,6 @@ export function DefaultChatMessage() {
 export function ContactMessage({ data }: any) {
   const [open, setOpen] = useState(false);
 
-
   function AddEmoji(emoji: string) {
     socket.emit("messageReaction", {
       msgId: data._id,
@@ -40,6 +41,8 @@ export function ContactMessage({ data }: any) {
       receiverId: data.receiverId,
     });
   }
+
+  const displayDate = formatDate(data.created_at);
 
   return (
     <>
@@ -55,7 +58,7 @@ export function ContactMessage({ data }: any) {
               })}
             </div>
             <p className="text-[10px] text-nowrap absolute top-0 right-0">
-              {data.created_at}
+              {displayDate}
             </p>
           </div>
         </div>
@@ -102,6 +105,8 @@ export function ContactMessage({ data }: any) {
 }
 
 export function UserMessage({ data }: any) {
+  const displayDate = formatDate(data.created_at);
+
   return (
     <>
       <div className="w-full relative grid grid-cols-2 gap-5 items-start justify-start">
@@ -129,7 +134,7 @@ export function UserMessage({ data }: any) {
           </div>
           <div className="relative">
             <p className="text-[10px] text-nowrap relative top-0 left-0">
-              {data.created_at}
+              {displayDate}
             </p>
             <div className="flex gap-1">
               {data.reactions.map((r, i) => {
