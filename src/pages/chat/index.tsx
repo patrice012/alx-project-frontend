@@ -11,10 +11,14 @@ export function Home() {
 
   useEffect(() => {
     (async () => {
-      const user = await checkAuth();
-      if (!user) window.location.href = "/auth";
-      else {
-        setUser(user);
+      try {
+        const data = await checkAuth();
+        if (data.error || !data) window.location.href = "/auth";
+        else {
+          setUser(user);
+        }
+      } catch (error) {
+        window.location.href = "/auth";
       }
     })();
   }, []);

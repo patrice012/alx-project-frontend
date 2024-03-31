@@ -38,6 +38,7 @@ export default function AuthPage() {
 
       sessionStorage.setItem("token", JSON.stringify(accessToken));
       sessionStorage.setItem("id", JSON.stringify(user.id));
+      sessionStorage.setItem("user", JSON.stringify(user));
 
       notificationAlert().then((toast) => {
         toast("Login successful", {
@@ -80,6 +81,7 @@ export default function AuthPage() {
       setUser(data);
 
       sessionStorage.setItem("token", JSON.stringify(accessToken));
+      sessionStorage.setItem("user", JSON.stringify(user));
       sessionStorage.setItem("id", JSON.stringify(user.id));
 
       notificationAlert().then((toast) => {
