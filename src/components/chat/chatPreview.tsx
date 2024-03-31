@@ -16,10 +16,17 @@ export function ChatPreview({ discussion }: { discussion: ChatPreviewProps }) {
   const handleClick = () => {
     socket.emit("joinChat", { discussionId: discussion._id });
     socket.emit("discussionMessageList", { discussionId: discussion._id });
+    document.getElementById("sidebar")?.classList.add("hidden");
   };
 
   const { user } = useProfile();
 
+  let lastMessage = discussion?.lastMessage;
+  const lastMsg = `${user.username} react with`;
+
+  if (lastMessage.includes(lastMsg)) {
+    lastMessage = lastMessage.replace(user.username, "You");
+  }
   return (
     <>
       <div
@@ -34,7 +41,7 @@ export function ChatPreview({ discussion }: { discussion: ChatPreviewProps }) {
                 ? discussion?.sender
                 : discussion?.receiver}
             </h3>
-            <p className="text-[13px] font-[300]">{discussion?.lastMessage}</p>
+            <p className="text-[13px] font-[300]">{lastMessage}</p>
           </div>
         </div>
 
