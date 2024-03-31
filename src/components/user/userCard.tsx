@@ -7,6 +7,7 @@ import { UserCardPreviewLoader } from "../skeleton/userCardSkeleton";
 
 export function UserCard() {
   const { user } = useProfile();
+  
   return (
     <>
       <div className="w-full grid lg:grid-cols-[1fr_44px] grid-cols-[1fr_100px] items-center justify-between">

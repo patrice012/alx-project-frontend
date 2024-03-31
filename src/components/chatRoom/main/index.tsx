@@ -62,7 +62,12 @@ export function ChatSection() {
               if (message.senderId === user.id) {
                 return <UserMessage key={index} data={message} />;
               } else {
-                return <ContactMessage key={index} data={message} />;
+                return (
+                  <ContactMessage
+                    key={index}
+                    data={message}
+                  />
+                );
               }
             })}
           </div>

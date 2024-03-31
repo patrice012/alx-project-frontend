@@ -6,6 +6,7 @@ export async function checkAuth() {
     console.log(user);
     return user;
   } catch (error) {
-    return null;
+    console.log(error);
+    throw error;
   }
 }
