@@ -60,6 +60,12 @@ export function ChatInput() {
     setDiscussionId(data.discussionId);
   });
 
+  document.getElementById("message")?.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      sendMessage();
+    }
+  });
+
   const sendMessage = () => {
     dispatchTyping(false);
 

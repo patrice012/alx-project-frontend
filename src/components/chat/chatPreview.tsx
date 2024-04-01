@@ -13,8 +13,11 @@ interface ChatPreviewProps {
 }
 
 import { useProfile } from "@/hooks/useProfile";
+import { useState } from "react";
 
 export function ChatPreview({ discussion }: { discussion: ChatPreviewProps }) {
+  const [isTyping, setIsTyping] = useState(false);
+
   const handleClick = () => {
     socket.emit("joinChat", { discussionId: discussion._id });
     socket.emit("discussionMessageList", { discussionId: discussion._id });
@@ -26,9 +29,20 @@ export function ChatPreview({ discussion }: { discussion: ChatPreviewProps }) {
   let lastMessage = discussion?.lastMessage;
   const lastMsg = `${user.username} react with`;
 
-  if (lastMessage.includes(lastMsg)) {
+  if (lastMessage?.includes(lastMsg)) {
     lastMessage = lastMessage.replace(user.username, "You");
   }
+
+  socket.on("typing", (data) => {
+    const { error, message } = data;
+    if (!error && message.length > 0) {
+      setIsTyping(true);
+    } else {
+      setTimeout(() => {
+        setIsTyping(false);
+      }, 1000);
+    }
+  });
 
   return (
     <>
@@ -49,8 +63,15 @@ export function ChatPreview({ discussion }: { discussion: ChatPreviewProps }) {
         </div>
 
         <div className="flex flex-col items-center justify-center">
-          <MessageStatus data={discussion?.updated_at} />
-          <NewMessageBadge data={discussion?.updated_at} />
+          <MessageStatus data={discussion?.updated_at} isTyping={isTyping} />
+          {/* {isTyping ? (
+            <MessageStatus data={discussion?.updated_at} isTyping={isTyping} />
+          ) : (
+            <NewMessageBadge
+              discId={discussion?._id}
+              data={discussion?.updated_at}
+            />
+          )} */}
         </div>
       </div>
     </>
