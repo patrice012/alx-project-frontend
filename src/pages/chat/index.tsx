@@ -13,6 +13,7 @@ export function Home() {
     (async () => {
       try {
         const data = await checkAuth();
+        console.log(data, "from check");
         if (data.error || !data) window.location.href = "/auth";
         else {
           setUser(user);
@@ -21,7 +22,7 @@ export function Home() {
         window.location.href = "/auth";
       }
     })();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     socket.emit("getOnlineUsers", { userId: user?.id });

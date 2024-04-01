@@ -11,9 +11,11 @@ import {
   // AddAccount,
 } from "./btns";
 
+import { AlertLogout } from "@/components/user/userLogout";
 import { AddAccount } from "@/components/chat/startDiscussion";
 
 import { UserAvatar } from "@/components/avatar";
+import { Avatar } from "@/components/ui/avatar";
 
 export function Navigation() {
   return (
@@ -34,7 +36,7 @@ export function Navigation() {
           <div className="space-y-3 flex flex-col items-center">
             <ModeToggle />
             <AddAccount />
-            <UserAvatar />
+            <AlertLogout />
           </div>
         </div>
       </div>

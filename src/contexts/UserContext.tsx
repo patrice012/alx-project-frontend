@@ -31,6 +31,7 @@ export const UserContext = createContext<{
 export const UserProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<User>(defaultUser);
 
+
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {children}
