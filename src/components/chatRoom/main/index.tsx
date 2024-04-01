@@ -65,6 +65,7 @@ export function ChatSection() {
                 return <ContactMessage key={index} data={message} />;
               }
             })}
+            <span id="scrollableDiv"></span>
           </div>
           <div className="absolute bottom-0 w-full">
             {viewChat ? <ChatInput /> : null}

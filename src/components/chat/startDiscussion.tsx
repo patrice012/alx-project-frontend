@@ -67,14 +67,14 @@ export function AddAccount() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <TooltipBtn
-          tooltiptext={"Start new chat"}
+        <Button
+          // tooltiptext={"Start new chat"}
           variant="circle"
           size="icon"
           className="w-[46px] h-[46px]"
         >
           <GoPlus className="h-[1.3rem] w-[1.3rem] transition-all" />
-        </TooltipBtn>
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] dark:text-white">
         <DialogHeader>

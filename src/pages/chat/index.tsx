@@ -4,13 +4,36 @@ import { socket } from "@/utils/socket";
 import { useEffect } from "react";
 import { useProfile } from "@/hooks/useProfile";
 import { notificationAlert } from "@/utils/notif";
+import { checkAuth } from "@/components/user/checkAuth";
 
-export default function Home() {
+export function Home() {
   const { user, setUser } = useProfile();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await checkAuth();
+        console.log(data, "from check");
+        if (data.error || !data) window.location.href = "/auth";
+        else {
+          setUser(user);
+        }
+      } catch (error) {
+        window.location.href = "/auth";
+      }
+    })();
+  }, [user]);
+
   useEffect(() => {
     socket.emit("getOnlineUsers", { userId: user?.id });
     socket.emit("userOnline", { userId: user?.id });
     socket.emit("discussionList", { userId: user?.id });
+
+    if (navigator.onLine) {
+      socket.emit("userOnline", { userId: user?.id });
+    } else {
+      socket.emit("userOffline", { userId: user?.id });
+    }
   }, [user?.id]);
 
   socket.on("logged", (data) => {
@@ -30,7 +53,6 @@ export default function Home() {
           description: `${error || "Please try again later"}`,
         });
       });
-    } else {
       window.location.href = "/auth";
     }
   });
@@ -55,6 +77,13 @@ export default function Home() {
         });
       });
     }
+  });
+
+  window.addEventListener("online", () => {
+    socket.emit("userOnline", { userId: user?.id });
+  });
+  window.addEventListener("offline", () => {
+    socket.emit("userOffline", { userId: user?.id });
   });
 
   return (

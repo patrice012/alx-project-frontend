@@ -1,5 +1,5 @@
-import { Button } from "../ui/button";
 import { TooltipBtn } from "../btn/tooltipBtn";
+import { socket } from "@/utils/socket";
 
 import { MdReply } from "react-icons/md";
 import { TbDotsVertical } from "react-icons/tb";
@@ -8,6 +8,8 @@ import { EmojisPickerReactions } from "./contactReaction";
 import { useState } from "react";
 import { GrEmoji } from "react-icons/gr";
 
+import { formatDate } from "@/utils/formatDate";
+
 export function DefaultChatMessage() {
   return (
     <>
@@ -15,10 +17,11 @@ export function DefaultChatMessage() {
         <div className="flex items-center justify-center mx-auto h-full">
           <div className="space-y-3">
             <span>
+              {" "}
               Send and receive messages without keeping your phone online.No
               price
-            </span>
-            <span>Only your email is require, login and start chat.</span>
+            </span>{" "}
+            <span> Only your email is require, login and start chat.</span>
           </div>
         </div>
       </div>
@@ -28,9 +31,19 @@ export function DefaultChatMessage() {
 
 export function ContactMessage({ data }: any) {
   const [open, setOpen] = useState(false);
+
   function AddEmoji(emoji: string) {
-    console.log(emoji);
+    socket.emit("messageReaction", {
+      msgId: data._id,
+      reaction: emoji,
+      discId: data.discussionId,
+      senderId: data.senderId,
+      receiverId: data.receiverId,
+    });
   }
+
+  const displayDate = formatDate(data.created_at);
+
   return (
     <>
       <div className="w-full relative grid grid-cols-2 gap-5 items-start justify-start">
@@ -39,8 +52,13 @@ export function ContactMessage({ data }: any) {
             <p>{data.message}</p>
           </div>
           <div className="relative">
+            <div className="flex gap-1">
+              {data.reactions.map((r, i) => {
+                return <span key={i}>{r}</span>;
+              })}
+            </div>
             <p className="text-[10px] text-nowrap absolute top-0 right-0">
-              {data.created_at}
+              {displayDate}
             </p>
           </div>
         </div>
@@ -87,6 +105,8 @@ export function ContactMessage({ data }: any) {
 }
 
 export function UserMessage({ data }: any) {
+  const displayDate = formatDate(data.created_at);
+
   return (
     <>
       <div className="w-full relative grid grid-cols-2 gap-5 items-start justify-start">
@@ -113,9 +133,14 @@ export function UserMessage({ data }: any) {
             <p>{data.message}</p>
           </div>
           <div className="relative">
-            <p className="text-[10px] text-nowrap absolute top-0 left-0">
-              {data.created_at}
+            <p className="text-[10px] text-nowrap relative top-0 left-0">
+              {displayDate}
             </p>
+            <div className="flex gap-1">
+              {data.reactions.map((r, i) => {
+                return <span key={i}>{r}</span>;
+              })}
+            </div>
           </div>
         </div>
       </div>
